@@ -1,5 +1,5 @@
-import 'package:disc_golf_soundboard/audio/audio_card.dart';
-import 'package:disc_golf_soundboard/audio/audio_element.dart';
+import 'package:disc_golf_soundboard/components/audio_card.dart';
+import 'package:disc_golf_soundboard/models/audio_element.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {

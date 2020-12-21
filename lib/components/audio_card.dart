@@ -1,5 +1,5 @@
 import 'package:audioplayers/audio_cache.dart';
-import 'package:disc_golf_soundboard/audio/audio_element.dart';
+import 'package:disc_golf_soundboard/models/audio_element.dart';
 import 'package:flutter/material.dart';
 
 class AudioCard extends StatelessWidget {
