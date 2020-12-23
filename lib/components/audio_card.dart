@@ -21,7 +21,7 @@ class _AudioCardState extends State<AudioCard> {
 
   void favourite() {
     setState(() {
-      widget.audioElement.favourite();
+      widget.audioElement.clickFavourite();
     });
   }
 

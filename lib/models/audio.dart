@@ -20,7 +20,7 @@ class Audio {
     listenCount++;
   }
 
-  void favourite() {
+  void clickFavourite() {
     isFavourite = !isFavourite;
   }
 }
