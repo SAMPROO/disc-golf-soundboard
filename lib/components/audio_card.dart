@@ -10,7 +10,6 @@ class AudioCard extends StatefulWidget {
 }
 
 class _AudioCardState extends State<AudioCard> {
-
   final double borderRadius = 10.0;
 
   @override
@@ -23,7 +22,8 @@ class _AudioCardState extends State<AudioCard> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [_fileInfo(widget.audioElement),_actionButtons()],
+        // TODO: Fix text overflow issue
+        children: [_fileInfo(widget.audioElement), _actionButtons()],
       ),
     );
   }
@@ -45,37 +45,34 @@ Widget _fileInfo(AudioElement audioElement) {
             Text(audioElement.audioName),
             Text(audioElement.playerName),
           ],
-        )],
+        )
+      ],
     ),
   );
 }
 
 Widget _avatarComponent(AudioElement audioElement) {
   double avatarSize = 100;
-  return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          height: avatarSize,
-          width: avatarSize,
-          color: Colors.red,
-          child: FittedBox(
-            fit: BoxFit.cover,
-            child: Image.asset(
-                'images/${audioElement.playerAvatar}'),
-          ),
+  return Stack(alignment: Alignment.center, children: [
+    Container(
+      height: avatarSize,
+      width: avatarSize,
+      color: Colors.red,
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: Image.asset('images/${audioElement.playerAvatar}'),
+      ),
+    ),
+    IconButton(
+        iconSize: avatarSize * 0.5,
+        icon: Icon(
+          Icons.play_arrow,
+          color: Colors.white,
         ),
-        IconButton(
-            iconSize: avatarSize * 0.5,
-            icon: Icon(
-              Icons.play_arrow,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              audioElement.playAudio();
-            })
-      ]
-  );
+        onPressed: () {
+          audioElement.playAudio();
+        })
+  ]);
 }
 
 Widget _actionButtons() {
