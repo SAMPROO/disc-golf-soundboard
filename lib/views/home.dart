@@ -8,11 +8,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   List<AudioElement> audioElements = [
-    AudioElement(audioName: 'Noniin!', audioFile: 'seppo_paju.mp3', playerName: 'Seppo Paju', playerAvatar: 'seppo_paju.jpg', isFavourite: false),
-    AudioElement(audioName: 'I am the best', audioFile: 'paul_mcbeth.mp3', playerName: 'Paul McBeth', playerAvatar: 'paul_mcbeth.jpg', isFavourite: true),
-    AudioElement(audioName: 'They call me Ticky Ricky', audioFile: 'ricky_wysocki.mp3', playerName: 'Ricky Wysocki', playerAvatar: 'ricky_wysocki.jpg', isFavourite: false),
+    AudioElement(
+        audioName: 'Noniin!',
+        audioFile: 'seppo_paju.mp3',
+        playerName: 'Seppo Paju',
+        playerAvatar: 'seppo_paju.jpg',
+        isFavourite: false),
+    AudioElement(
+        audioName: 'I am the best',
+        audioFile: 'paul_mcbeth.mp3',
+        playerName: 'Paul McBeth',
+        playerAvatar: 'paul_mcbeth.jpg',
+        isFavourite: true),
+    AudioElement(
+        audioName: 'They call me Ticky Ricky',
+        audioFile: 'ricky_wysocki.mp3',
+        playerName: 'Ricky Wysocki',
+        playerAvatar: 'ricky_wysocki.jpg',
+        isFavourite: false),
   ];
 
   @override
@@ -23,11 +37,11 @@ class _HomeState extends State<Home> {
           centerTitle: true,
         ),
         body: ListView.builder(
-          itemCount: audioElements.length,
-          itemBuilder: (context, index) {
-            return AudioCard(
-              audioElement: audioElements[index],
-            );
-          }));
+            itemCount: audioElements.length,
+            itemBuilder: (context, index) {
+              return AudioCard(
+                audioElement: audioElements[index],
+              );
+            }));
   }
 }
