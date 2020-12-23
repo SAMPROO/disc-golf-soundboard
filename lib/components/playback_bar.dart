@@ -23,34 +23,34 @@ class _PlaybackBarState extends State<PlaybackBar> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [_fileInfo(),_actionButtons()],
+        children: [_fileInfo(widget.audioElement),_actionButtons()],
       ),
     );
   }
 }
 
-Widget _fileInfo() {
+Widget _fileInfo(AudioElement audioElement) {
   return Container(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _avatarComponent(),
+        _avatarComponent(audioElement),
         SizedBox(
           width: 20,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Noniin!'),
-            Text('Seppo Paju'),
+            Text(audioElement.audioName),
+            Text(audioElement.playerName),
           ],
         )],
     ),
   );
 }
 
-Widget _avatarComponent() {
+Widget _avatarComponent(AudioElement audioElement) {
   double avatarSize = 100;
   return Stack(
       alignment: Alignment.center,
@@ -62,7 +62,7 @@ Widget _avatarComponent() {
           child: FittedBox(
             fit: BoxFit.cover,
             child: Image.asset(
-                'images/paul_mcbeth.jpg'),
+                'images/${audioElement.playerAvatar}'),
           ),
         ),
         IconButton(
@@ -71,7 +71,9 @@ Widget _avatarComponent() {
               Icons.play_arrow,
               color: Colors.white,
             ),
-            onPressed: null)
+            onPressed: () {
+              audioElement.playAudio();
+            })
       ]
   );
 }

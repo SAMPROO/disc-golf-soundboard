@@ -1,4 +1,4 @@
-import 'package:disc_golf_soundboard/components/audio_card.dart';
+import 'package:disc_golf_soundboard/components/playback_bar.dart';
 import 'package:disc_golf_soundboard/models/audio_element.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
         body: ListView.builder(
             itemCount: audioElements.length,
             itemBuilder: (context, index) {
-              return AudioCard(
+              return PlaybackBar(
                 audioElement: audioElements[index],
               );
             }));
