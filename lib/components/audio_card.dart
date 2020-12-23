@@ -1,6 +1,7 @@
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:disc_golf_soundboard/models/player.dart';
 import 'package:disc_golf_soundboard/models/player_utils.dart';
+import 'package:disc_golf_soundboard/views/player_page.dart';
 import 'package:flutter/material.dart';
 
 class AudioCard extends StatefulWidget {
@@ -36,7 +37,10 @@ class _AudioCardState extends State<AudioCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // TODO: Fix text overflow issue
-        children: [_fileInfo(widget.audioElement, widget.player), _actionButtons(widget.audioElement, favourite)],
+        children: [
+          _fileInfo(widget.audioElement, widget.player),
+          _actionButtons(widget.audioElement, widget.player, context, favourite)
+        ],
       ),
     );
   }
@@ -90,7 +94,7 @@ Widget _avatarComponent(Audio audioElement, Player player) {
   ]);
 }
 
-Widget _actionButtons(Audio audioElement, Function callback) {
+Widget _actionButtons(Audio audioElement, Player player, BuildContext context, Function callback) {
   double iconSize = 30;
   return Container(
     padding: EdgeInsets.only(right: 10),
@@ -98,24 +102,31 @@ Widget _actionButtons(Audio audioElement, Function callback) {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         IconButton(
+            iconSize: iconSize,
+            icon: Icon(
+              Icons.star,
+            ),
+            color: audioElement.isFavourite ? Colors.amberAccent : Colors.black,
+            onPressed: () {
+              callback();
+            }),
+        IconButton(
+          icon: Icon(Icons.account_circle),
           iconSize: iconSize,
-          icon: Icon(Icons.star,),
-          color: audioElement.isFavourite ? Colors.amberAccent : Colors.black,
-          onPressed: () {callback();}
+          color: Colors.black,
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PlayerPage(player)),
+            );
+          },
         ),
-        SizedBox(
-          width: 10,
-        ),
-        Icon(
-          Icons.account_circle,
-          size: iconSize,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Icon(
-          Icons.share,
-          size: iconSize,
+        IconButton(
+          icon: Icon(Icons.share),
+          iconSize: iconSize,
+          color: Colors.black,
+          onPressed: () {},
         ),
       ],
     ),

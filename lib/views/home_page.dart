@@ -2,7 +2,7 @@ import 'package:disc_golf_soundboard/components/audio_list.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class HomePage extends StatelessWidget {
   final List<Audio> audioElements = [
     Audio('seppo', 'Pönttöön!', 'seppo_paju.mp3', 'seppo_paju'),
     Audio('paul', 'Fart #1', 'paul_mcbeth.mp3', 'paul_mcbeth'),
