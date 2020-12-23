@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AudioCard extends StatefulWidget {
   AudioElement audioElement;
-  AudioCard({this.audioElement});
+  AudioCard(this.audioElement);
 
   @override
   _AudioCardState createState() => _AudioCardState();
@@ -11,6 +11,12 @@ class AudioCard extends StatefulWidget {
 
 class _AudioCardState extends State<AudioCard> {
   final double borderRadius = 10.0;
+
+  void favourite() {
+    setState(() {
+      widget.audioElement.favourite();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +29,7 @@ class _AudioCardState extends State<AudioCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // TODO: Fix text overflow issue
-        children: [_fileInfo(widget.audioElement), _actionButtons()],
+        children: [_fileInfo(widget.audioElement), _actionButtons(widget.audioElement, favourite)],
       ),
     );
   }
@@ -71,20 +77,23 @@ Widget _avatarComponent(AudioElement audioElement) {
         ),
         onPressed: () {
           audioElement.playAudio();
+          audioElement.incrementListenedCount();
         })
   ]);
 }
 
-Widget _actionButtons() {
+Widget _actionButtons(AudioElement audioElement, Function callback) {
   double iconSize = 30;
   return Container(
     padding: EdgeInsets.only(right: 10),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Icon(
-          Icons.star,
-          size: iconSize,
+        IconButton(
+          iconSize: iconSize,
+          icon: Icon(Icons.star,),
+          color: audioElement.isFavourite ? Colors.amberAccent : Colors.black,
+          onPressed: () {callback();}
         ),
         SizedBox(
           width: 10,

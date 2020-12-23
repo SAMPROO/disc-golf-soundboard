@@ -1,4 +1,4 @@
-import 'package:disc_golf_soundboard/components/audio_card.dart';
+import 'package:disc_golf_soundboard/components/audio_list.dart';
 import 'package:disc_golf_soundboard/models/audio_element.dart';
 import 'package:flutter/material.dart';
 
@@ -36,12 +36,14 @@ class _HomeState extends State<Home> {
           title: Text('Disc Golf Soundboard'),
           centerTitle: true,
         ),
-        body: ListView.builder(
-            itemCount: audioElements.length,
-            itemBuilder: (context, index) {
-              return AudioCard(
-                audioElement: audioElements[index],
-              );
-            }));
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(child: AudioList(audioElements)),
+            ],
+          ),
+        )
+    );
   }
 }
+
