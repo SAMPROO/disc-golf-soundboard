@@ -1,9 +1,16 @@
-import 'package:disc_golf_soundboard/models/audio_element.dart';
+import 'package:disc_golf_soundboard/models/audio.dart';
+import 'package:disc_golf_soundboard/models/player.dart';
+import 'package:disc_golf_soundboard/models/player_utils.dart';
 import 'package:flutter/material.dart';
 
 class AudioCard extends StatefulWidget {
-  AudioElement audioElement;
-  AudioCard(this.audioElement);
+  Audio audioElement;
+  Player player;
+
+  AudioCard(Audio audioElement) {
+    this.audioElement = audioElement;
+    this.player = PlayerUtils.getPlayerById(audioElement.playerId);
+  }
 
   @override
   _AudioCardState createState() => _AudioCardState();
@@ -29,19 +36,19 @@ class _AudioCardState extends State<AudioCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // TODO: Fix text overflow issue
-        children: [_fileInfo(widget.audioElement), _actionButtons(widget.audioElement, favourite)],
+        children: [_fileInfo(widget.audioElement, widget.player), _actionButtons(widget.audioElement, favourite)],
       ),
     );
   }
 }
 
-Widget _fileInfo(AudioElement audioElement) {
+Widget _fileInfo(Audio audioElement, Player player) {
   return Container(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _avatarComponent(audioElement),
+        _avatarComponent(audioElement, player),
         SizedBox(
           width: 20,
         ),
@@ -49,7 +56,7 @@ Widget _fileInfo(AudioElement audioElement) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(audioElement.audioName),
-            Text(audioElement.playerName),
+            Text(player.playerName),
           ],
         )
       ],
@@ -57,7 +64,7 @@ Widget _fileInfo(AudioElement audioElement) {
   );
 }
 
-Widget _avatarComponent(AudioElement audioElement) {
+Widget _avatarComponent(Audio audioElement, Player player) {
   double avatarSize = 100;
   return Stack(alignment: Alignment.center, children: [
     Container(
@@ -66,7 +73,7 @@ Widget _avatarComponent(AudioElement audioElement) {
       color: Colors.red,
       child: FittedBox(
         fit: BoxFit.cover,
-        child: Image.asset('images/${audioElement.playerAvatar}'),
+        child: Image.asset('images/${player.playerAvatar}'),
       ),
     ),
     IconButton(
@@ -77,12 +84,13 @@ Widget _avatarComponent(AudioElement audioElement) {
         ),
         onPressed: () {
           audioElement.playAudio();
-          audioElement.incrementListenedCount();
+          audioElement.incrementListenCount();
+          player.incrementListenCount();
         })
   ]);
 }
 
-Widget _actionButtons(AudioElement audioElement, Function callback) {
+Widget _actionButtons(Audio audioElement, Function callback) {
   double iconSize = 30;
   return Container(
     padding: EdgeInsets.only(right: 10),

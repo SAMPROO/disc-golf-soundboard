@@ -1,9 +1,26 @@
-import 'package:disc_golf_soundboard/models/player.dart';
+import 'package:audioplayers/audio_cache.dart';
 
 class Audio {
+
   String id;
   String audioName;
   String audioFile;
-  Player player;
-  int listensCount;
+  String playerId;
+  int listenCount = 0;
+  bool isFavourite = false;
+
+  Audio(this.id, this.audioName, this.audioFile, this.playerId);
+
+  void playAudio() {
+    AudioCache audioCache = AudioCache();
+    audioCache.play(audioFile);
+  }
+
+  void incrementListenCount() {
+    listenCount++;
+  }
+
+  void favourite() {
+    isFavourite = !isFavourite;
+  }
 }

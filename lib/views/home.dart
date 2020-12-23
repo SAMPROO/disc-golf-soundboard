@@ -1,5 +1,6 @@
 import 'package:disc_golf_soundboard/components/audio_list.dart';
-import 'package:disc_golf_soundboard/models/audio_element.dart';
+import 'package:disc_golf_soundboard/models/audio.dart';
+import 'package:disc_golf_soundboard/models/player.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -8,25 +9,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<AudioElement> audioElements = [
-    AudioElement(
-        audioName: 'Noniin!',
-        audioFile: 'seppo_paju.mp3',
-        playerName: 'Seppo Paju',
-        playerAvatar: 'seppo_paju.jpg',
-        isFavourite: false),
-    AudioElement(
-        audioName: 'I am the best',
-        audioFile: 'paul_mcbeth.mp3',
-        playerName: 'Paul McBeth',
-        playerAvatar: 'paul_mcbeth.jpg',
-        isFavourite: true),
-    AudioElement(
-        audioName: 'They call me Ticky Ricky',
-        audioFile: 'ricky_wysocki.mp3',
-        playerName: 'Ricky Wysocki',
-        playerAvatar: 'ricky_wysocki.jpg',
-        isFavourite: false),
+
+  Player playerSeppo = Player('seppo_paju', 'Seppo Paju', 'seppo_paju.jpg');
+  Player playerPaul = Player('paul_mcbeth', 'Paul McBeth', 'paul_mcbeth.jpg');
+  Player playerRicky = Player('ricky_wysocki', 'Ricky Wysocki', 'ricky_wysocki.jpg');
+
+  List<Audio> audioElements = [
+    Audio('seppo', 'Pönttöön!', 'seppo_paju.mp3', 'seppo_paju'),
+    Audio('paul', 'Fart #1', 'paul_mcbeth.mp3', 'paul_mcbeth'),
+    Audio('ricky', 'Fart #2', 'ricky_wysocki.mp3', 'ricky_wysocki'),
   ];
 
   @override
@@ -36,13 +27,7 @@ class _HomeState extends State<Home> {
           title: Text('Disc Golf Soundboard'),
           centerTitle: true,
         ),
-        body: SafeArea(
-          child: Column(
-            children: [
-              Expanded(child: AudioList(audioElements)),
-            ],
-          ),
-        )
+        body: AudioList(audioElements)
     );
   }
 }

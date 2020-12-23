@@ -1,9 +1,9 @@
 import 'package:disc_golf_soundboard/components/audio_card.dart';
-import 'package:disc_golf_soundboard/models/audio_element.dart';
+import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:flutter/material.dart';
 
 class AudioList extends StatefulWidget {
-  List<AudioElement> listItems;
+  List<Audio> listItems = [];
   AudioList(this.listItems);
 
   @override
