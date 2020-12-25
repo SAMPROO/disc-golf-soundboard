@@ -1,3 +1,4 @@
+import 'package:disc_golf_soundboard/components/audio_card_play.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:disc_golf_soundboard/models/player.dart';
 import 'package:disc_golf_soundboard/models/player_utils.dart';
@@ -52,7 +53,7 @@ Widget _fileInfo(BuildContext context, Audio audioElement, Player player) {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _avatarComponent(context, audioElement, player),
+        AudioCardPlay(player, audioElement),
         SizedBox(
           width: 20,
         ),
@@ -66,47 +67,6 @@ Widget _fileInfo(BuildContext context, Audio audioElement, Player player) {
       ],
     ),
   );
-}
-
-Widget _avatarComponent(
-    BuildContext context, Audio audioElement, Player player) {
-  double avatarSize = 100;
-  return Stack(alignment: Alignment.center, children: [
-    Container(
-      height: avatarSize,
-      width: avatarSize,
-      color: Colors.red,
-      child: FittedBox(
-          fit: BoxFit.cover,
-          child: FutureBuilder(
-            future: player.getAvatarImage(context, player.playerAvatar),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Container(child: snapshot.data);
-              }
-
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              return Container();
-            },
-          )),
-    ),
-    IconButton(
-        iconSize: avatarSize * 0.5,
-        icon: Icon(
-          Icons.play_arrow,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          audioElement.playAudio();
-          audioElement.incrementListenCount();
-          player.incrementListenCount();
-        })
-  ]);
 }
 
 Widget _actionButtons(Audio audioElement, Player player, BuildContext context,
