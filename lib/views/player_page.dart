@@ -23,7 +23,26 @@ class PlayerPage extends StatelessWidget {
                 color: Colors.red,
                 child: FittedBox(
                   fit: BoxFit.cover,
-                  child: Image.asset('images/${player.playerAvatar}'),
+                  child:  FutureBuilder(
+                    future: player.getAvatarImage(context, player.playerAvatar),
+                    builder: (context, snapshot) {
+                      print(snapshot);
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return Container(
+                            height: MediaQuery.of(context).size.height / 1.25,
+                            width: MediaQuery.of(context).size.width / 1.25,
+                            child: snapshot.data);
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Container(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      return Container();
+                    },
+                  ),
                 ),
               ),
               Column(

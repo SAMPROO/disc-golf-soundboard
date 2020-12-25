@@ -38,7 +38,7 @@ class _AudioCardState extends State<AudioCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // TODO: Fix text overflow issue
         children: [
-          _fileInfo(widget.audioElement, widget.player),
+          _fileInfo(context, widget.audioElement, widget.player),
           _actionButtons(widget.audioElement, widget.player, context, favourite)
         ],
       ),
@@ -46,13 +46,13 @@ class _AudioCardState extends State<AudioCard> {
   }
 }
 
-Widget _fileInfo(Audio audioElement, Player player) {
+Widget _fileInfo(BuildContext context, Audio audioElement, Player player) {
   return Container(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _avatarComponent(audioElement, player),
+        _avatarComponent(context, audioElement, player),
         SizedBox(
           width: 20,
         ),
@@ -68,7 +68,8 @@ Widget _fileInfo(Audio audioElement, Player player) {
   );
 }
 
-Widget _avatarComponent(Audio audioElement, Player player) {
+Widget _avatarComponent(
+    BuildContext context, Audio audioElement, Player player) {
   double avatarSize = 100;
   return Stack(alignment: Alignment.center, children: [
     Container(
@@ -76,9 +77,23 @@ Widget _avatarComponent(Audio audioElement, Player player) {
       width: avatarSize,
       color: Colors.red,
       child: FittedBox(
-        fit: BoxFit.cover,
-        child: Image.asset('images/${player.playerAvatar}'),
-      ),
+          fit: BoxFit.cover,
+          child: FutureBuilder(
+            future: player.getAvatarImage(context, player.playerAvatar),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(child: snapshot.data);
+              }
+
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              return Container();
+            },
+          )),
     ),
     IconButton(
         iconSize: avatarSize * 0.5,
@@ -94,7 +109,8 @@ Widget _avatarComponent(Audio audioElement, Player player) {
   ]);
 }
 
-Widget _actionButtons(Audio audioElement, Player player, BuildContext context, Function callback) {
+Widget _actionButtons(Audio audioElement, Player player, BuildContext context,
+    Function callback) {
   double iconSize = 30;
   return Container(
     padding: EdgeInsets.only(right: 10),
