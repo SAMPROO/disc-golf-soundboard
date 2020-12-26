@@ -1,7 +1,7 @@
 import 'package:disc_golf_soundboard/components/audio_card_play.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:disc_golf_soundboard/models/player.dart';
-import 'package:disc_golf_soundboard/models/player_utils.dart';
+import 'package:disc_golf_soundboard/services/database.dart';
 import 'package:disc_golf_soundboard/views/player_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,6 @@ class AudioCard extends StatefulWidget {
 
   AudioCard(Audio audioElement) {
     this.audioElement = audioElement;
-    this.player = PlayerUtils.getPlayerById(audioElement.playerId);
   }
 
   @override
@@ -39,7 +38,15 @@ class _AudioCardState extends State<AudioCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // TODO: Fix text overflow issue
         children: [
-          _fileInfo(context, widget.audioElement, widget.player),
+          //TODO: If audio or player is null ->
+          StreamBuilder<Player>(
+              stream: DatabaseService(playerId: widget.audioElement.playerId).player,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return _fileInfo(context, widget.audioElement, snapshot.data);
+                }
+                return _fileInfo(context, widget.audioElement, Player("id", "playerName", "playerAvatar"));
+              }),
           _actionButtons(widget.audioElement, widget.player, context, favourite)
         ],
       ),

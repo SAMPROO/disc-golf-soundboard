@@ -15,7 +15,7 @@ class Player {
 
   Future<Widget> getAvatarImage(BuildContext context, String imageName) async {
     Image image;
-    await FirebaseStorageService.loadImage(context, imageName).then((value) {
+    await FirebaseStorageService.loadFile(context, imageName).then((value) {
       image = Image.network(
         value,
         fit: BoxFit.scaleDown,

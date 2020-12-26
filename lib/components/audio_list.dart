@@ -1,11 +1,9 @@
 import 'package:disc_golf_soundboard/components/audio_card.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AudioList extends StatefulWidget {
-  List<Audio> listItems = [];
-  AudioList(this.listItems);
-
   @override
   _AudioListState createState() => _AudioListState();
 }
@@ -13,10 +11,11 @@ class AudioList extends StatefulWidget {
 class _AudioListState extends State<AudioList> {
   @override
   Widget build(BuildContext context) {
+    final audios = Provider.of<List<Audio>>(context);
     return ListView.builder(
-        itemCount: widget.listItems.length,
+        itemCount: audios.length,
         itemBuilder: (context, index) {
-          return AudioCard(widget.listItems[index]);
+          return AudioCard(audios[index]);
         });
   }
 }

@@ -15,7 +15,7 @@ class Audio {
   Audio(this.id, this.audioName, this.audioFile, this.playerId);
 
   void playAudio(BuildContext context, Function callback) async {
-    FirebaseStorageService.loadAudio(context, audioFile).then((value) async {
+    FirebaseStorageService.loadFile(context, audioFile).then((value) async {
       if (playing) {
         var result = await audioPlayer.pause();
         if (result == 1) {

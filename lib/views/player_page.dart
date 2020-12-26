@@ -1,5 +1,3 @@
-import 'package:disc_golf_soundboard/components/audio_list.dart';
-import 'package:disc_golf_soundboard/models/audio_utils.dart';
 import 'package:disc_golf_soundboard/models/player.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +54,7 @@ class PlayerPage extends StatelessWidget {
             ],
           ),
           Divider(),
-          Expanded(flex: 3, child: AudioList(AudioUtils.getAudiosByPlayerId(player.id))),
+          //Expanded(flex: 3, child: AudioList(AudioUtils.getAudiosByPlayerId(player.id))),
         ],
       ),
     );
