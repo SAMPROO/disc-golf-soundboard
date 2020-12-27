@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 
 class AudioCard extends StatefulWidget {
   final Audio audioElement;
-  Player player;
+  final Player player;
 
-  AudioCard(this.audioElement);
+  AudioCard(this.audioElement, this.player);
 
   @override
   _AudioCardState createState() => _AudioCardState();
@@ -35,19 +35,9 @@ class _AudioCardState extends State<AudioCard> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        // TODO: Fix text overflow issue
         children: [
           //TODO: If audio or player is null ->
-          StreamBuilder<Player>(
-              stream: DatabaseService(playerId: widget.audioElement.playerId)
-                  .player,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return _fileInfo(widget.audioElement, snapshot.data);
-                }
-                return _fileInfo(widget.audioElement,
-                    Player("id", "playerName", "playerAvatar"));
-              }),
+          _fileData(widget.audioElement, widget.player),
           _actionButtons(widget.audioElement, widget.player, context, favourite)
         ],
       ),
@@ -55,27 +45,26 @@ class _AudioCardState extends State<AudioCard> {
   }
 }
 
-Widget _fileInfo(Audio audioElement, Player player) {
-  return Container(
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Stack(
-            alignment: Alignment.center,
-            children: [AudioCardAvatar(player), PlayAudioButton(audioElement)]),
-        SizedBox(
-          width: 20,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(audioElement.audioName),
-            Text(player.playerName),
-          ],
-        )
-      ],
-    ),
+Widget _fileData(Audio audioElement, Player player) {
+  return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Stack(
+          alignment: Alignment.center,
+          children: [AudioCardAvatar(player), PlayAudioButton(audioElement)]),
+      SizedBox(
+        width: 20,
+      ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // TODO: Fix text overflow issue
+          Text(audioElement.audioName),
+          Text(player.playerName),
+        ],
+      )
+    ],
   );
 }
 
