@@ -1,9 +1,8 @@
+import 'package:disc_golf_soundboard/components/AudioCard/audio_card_action_buttons.dart';
 import 'package:disc_golf_soundboard/components/AudioCard/audio_card_avatar.dart';
 import 'package:disc_golf_soundboard/components/AudioCard/play_audio_button.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:disc_golf_soundboard/models/player.dart';
-import 'package:disc_golf_soundboard/services/database.dart';
-import 'package:disc_golf_soundboard/views/player_page.dart';
 import 'package:flutter/material.dart';
 
 class AudioCard extends StatefulWidget {
@@ -38,7 +37,7 @@ class _AudioCardState extends State<AudioCard> {
         children: [
           //TODO: If audio or player is null ->
           _fileData(widget.audioElement, widget.player),
-          _actionButtons(widget.audioElement, widget.player, context, favourite)
+          AudioCardActionButtons(widget.audioElement, widget.player)
         ],
       ),
     );
@@ -65,45 +64,5 @@ Widget _fileData(Audio audioElement, Player player) {
         ],
       )
     ],
-  );
-}
-
-Widget _actionButtons(Audio audioElement, Player player, BuildContext context,
-    Function callback) {
-  double iconSize = 30;
-  return Container(
-    padding: EdgeInsets.only(right: 10),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        IconButton(
-            iconSize: iconSize,
-            icon: Icon(
-              Icons.star,
-            ),
-            color: audioElement.isFavourite ? Colors.amberAccent : Colors.black,
-            onPressed: () {
-              callback();
-            }),
-        IconButton(
-          icon: Icon(Icons.account_circle),
-          iconSize: iconSize,
-          color: Colors.black,
-          padding: EdgeInsets.zero,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PlayerPage(player)),
-            );
-          },
-        ),
-        IconButton(
-          icon: Icon(Icons.share),
-          iconSize: iconSize,
-          color: Colors.black,
-          onPressed: () {},
-        ),
-      ],
-    ),
   );
 }
