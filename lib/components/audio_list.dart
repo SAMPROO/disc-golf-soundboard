@@ -1,4 +1,4 @@
-import 'package:disc_golf_soundboard/components/audio_card.dart';
+import 'package:disc_golf_soundboard/components/AudioCard/audio_card.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

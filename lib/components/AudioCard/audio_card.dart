@@ -1,4 +1,5 @@
-import 'package:disc_golf_soundboard/components/audio_card_play.dart';
+import 'package:disc_golf_soundboard/components/AudioCard/audio_card_avatar.dart';
+import 'package:disc_golf_soundboard/components/AudioCard/play_audio_button.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:disc_golf_soundboard/models/player.dart';
 import 'package:disc_golf_soundboard/services/database.dart';
@@ -6,12 +7,10 @@ import 'package:disc_golf_soundboard/views/player_page.dart';
 import 'package:flutter/material.dart';
 
 class AudioCard extends StatefulWidget {
-  Audio audioElement;
+  final Audio audioElement;
   Player player;
 
-  AudioCard(Audio audioElement) {
-    this.audioElement = audioElement;
-  }
+  AudioCard(this.audioElement);
 
   @override
   _AudioCardState createState() => _AudioCardState();
@@ -40,12 +39,14 @@ class _AudioCardState extends State<AudioCard> {
         children: [
           //TODO: If audio or player is null ->
           StreamBuilder<Player>(
-              stream: DatabaseService(playerId: widget.audioElement.playerId).player,
+              stream: DatabaseService(playerId: widget.audioElement.playerId)
+                  .player,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return _fileInfo(context, widget.audioElement, snapshot.data);
+                  return _fileInfo(widget.audioElement, snapshot.data);
                 }
-                return _fileInfo(context, widget.audioElement, Player("id", "playerName", "playerAvatar"));
+                return _fileInfo(widget.audioElement,
+                    Player("id", "playerName", "playerAvatar"));
               }),
           _actionButtons(widget.audioElement, widget.player, context, favourite)
         ],
@@ -54,13 +55,15 @@ class _AudioCardState extends State<AudioCard> {
   }
 }
 
-Widget _fileInfo(BuildContext context, Audio audioElement, Player player) {
+Widget _fileInfo(Audio audioElement, Player player) {
   return Container(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        AudioCardPlay(player, audioElement),
+        Stack(
+            alignment: Alignment.center,
+            children: [AudioCardAvatar(player), PlayAudioButton(audioElement)]),
         SizedBox(
           width: 20,
         ),
