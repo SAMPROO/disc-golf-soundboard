@@ -7,7 +7,7 @@ class AudioCardAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double avatarSize = 100;
+    double avatarSize = 300;
     return Container(
       height: avatarSize,
       width: avatarSize,

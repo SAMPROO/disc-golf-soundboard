@@ -1,3 +1,4 @@
+import 'package:disc_golf_soundboard/components/audio_grid.dart';
 import 'package:disc_golf_soundboard/components/audio_list.dart';
 import 'package:disc_golf_soundboard/models/audio.dart';
 import 'package:disc_golf_soundboard/services/database.dart';
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
             title: Text('Disc Golf Soundboard'),
             centerTitle: true,
           ),
-          body: AudioList()),
+          body: AudioGrid()),
     );
   }
 }
